@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import { useRef } from 'react';
 
 const Form = ({onSubmit}) => {
+  const nameinputref = useRef();
+  const ageinputref = useRef();
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
 
@@ -19,20 +22,31 @@ const Form = ({onSubmit}) => {
     onSubmit({name, age});
     setName('');
     setAge('');
+    console.log(nameinputref.current.value)
     // console.log(name);
     // console.log(age);
   };
 
   return (
-    <div>
+    <Fragment>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
-        <input type="text" placeholder="username" value={name} onChange={userdatacollection} /><br />
+        <input type="text"
+         placeholder="username"
+          value={name} 
+          onChange={userdatacollection} 
+          ref={nameinputref}
+          /><br />
         <label htmlFor="age">Age</label>
-        <input type="number" placeholder="age" value={age} onChange={agedatacollection} />
+        <input type="number"
+         placeholder="age"
+          value={age}
+           onChange={agedatacollection}
+           ref={ageinputref} 
+           />
         <button type="submit">submit</button>
       </form>
-    </div>
+    </Fragment>
   );
 };
 
