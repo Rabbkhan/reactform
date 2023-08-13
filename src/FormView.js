@@ -1,15 +1,18 @@
 import React from 'react'
 import './formview.css'
-const FormView = ({name,age}) => {
+const FormView = ({Product,selling, productname}) => {
   return (
     <div>
 
 <div className='container'>
     <div className='username'>
-{name}
+{Product}
     </div>
     <div className='age'>
-        {age}
+        {selling}
+    </div>
+    <div className='age'>
+        {productname}
     </div>
 </div>
 

@@ -13,7 +13,7 @@ return (
     <Fragment>
     <Form onSubmit={handeFormSubmit}/>
     {submitData.map((formData, index) => (
-        <FormView key={index} name={formData.name} age={formData.age} />
+        <FormView key={index} Product={formData.Product}  selling={formData.selling} productname={formData.productname} />
       ))}
     </Fragment>
   );
