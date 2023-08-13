@@ -1,87 +1,73 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Form = ({onSubmit}) => {
-  const Productinputref = useRef();
-  const sellinginputref = useRef();
-  const productnameinputref =useRef();
+const Form = ({ onSubmit }) => {
   const [Product, setProduct] = useState('');
   const [selling, setselling] = useState('');
   const [productname, setProductName] = useState('');
-const [data, setData] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
 
-useEffect(()=>{
-  const Storedata = localStorage.getItem('myData')
-  if(Storedata){
-    setData(Storedata)
-  }
-},[])
   const userdatacollection = (e) => {
     setProduct(e.target.value);
-    setData(e.target.value);
-
   };
 
   const sellingdatacollection = (e) => {
     setselling(e.target.value);
-    setData(e.target.value);
-
   };
-  const productnamedatacollection = (e)=>{
-    setProductName(e.target.value);
-    setData(e.target.value);
 
-  }
+  const productnamedatacollection = (e) => {
+    setProductName(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    onSubmit({Product, selling, productname});
+    onSubmit({ Product, selling, productname });
     setProduct('');
     setselling('');
     setProductName('');
-    console.log(Productinputref.current.value)
-  
   };
-  const handleSave =()=>{
-    localStorage.setItem('myData',data)
-  }
+
+  useEffect(() => {
+    // const productPrice = parseFloat(Product);
+    const sellingPrice = parseFloat(selling);
+    if ( !isNaN(sellingPrice)) {
+      const calculatedTotalPrice =  sellingPrice;
+      setTotalPrice(calculatedTotalPrice);
+    }
+  }, [Product, selling]);
 
   return (
-    <Fragment>
+    <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="Product">Product Id</label>
-        <input type="number"
-         placeholder="Product"
-    
-    name={data}
-    onClick={handleSave}
-         value={Product} 
-          onChange={userdatacollection} 
-          ref={Productinputref}
-          /><br />
+        <input
+          type="number"
+          placeholder="Product"
+          value={Product}
+          onChange={userdatacollection}
+        />
+        <br />
         <label htmlFor="selling">selling</label>
-        <input type="number"
-         placeholder="selling"
-    
-    name={data}
-    onClick={handleSave}
-         value={selling}
-           onChange={sellingdatacollection}
-           ref={sellinginputref} 
-           />
+        <input
+          type="number"
+          placeholder="selling"
+          value={selling}
+          onChange={sellingdatacollection}
+        />
+        <br />
         <label htmlFor="ProductName">Product Name</label>
-        <input type="text"
-         placeholder="Product Name"
-         name={data}
-         onClick={handleSave}
-
+        <input
+          type="text"
+          placeholder="Product Name"
           value={productname}
-           onChange={productnamedatacollection}
-           ref={productnameinputref} 
-           />
+          onChange={productnamedatacollection}
+        />
+        <br />
         <button type="submit">submit</button>
       </form>
-    </Fragment>
+      <div>
+        <p>Total Price: {totalPrice}</p>
+      </div>
+    </div>
   );
 };
 
